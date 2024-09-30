@@ -25,7 +25,7 @@ func (g *Game) Draw(scream *ebiten.Image) {
 }
 
 // tamanaho da tela
-func (g *Game) Layout(outsideWith, outsideHeith int) (screamWith, screamHeith int) {
-	return outsideWith, outsideHeith
+func (g *Game) Layout(outsideWith, outsideHeith int) (int,  int) {
+	return screamWith, screamHeith
 }
 //---------------------------------------------------------------------------------
