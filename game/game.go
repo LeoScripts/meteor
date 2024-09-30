@@ -5,10 +5,14 @@ import "github.com/hajimehoshi/ebiten/v2"
 type Game struct{
 	player *Player
 	lasers []*Laser
+	meteors []*Meteor
+	meteorSpawnTimer *Timer
 }
 
 func NewGame() *Game {
-	g := &Game{}
+	g := &Game{
+		meteorSpawnTimer: NewTimer(24),
+	}
 	player := NewPlayer(g)
 	g.player = player
 	return g
@@ -24,6 +28,17 @@ func (g *Game) Update() error {
 		l.Update()
 	}
 
+	g.meteorSpawnTimer.Update()
+	if g.meteorSpawnTimer.IsReady() {
+		g.meteorSpawnTimer.Reset()
+		m := NewMeteor()
+		g.meteors  = append(g.meteors, m)
+	}
+
+	for _, m := range g.meteors {
+		m.Update()
+	}
+
 	return nil
 }
 
@@ -33,6 +48,10 @@ func (g *Game) Draw(scream *ebiten.Image) {
 
 	for _, l := range g.lasers {
 		l.Draw(scream)
+	}
+
+	for _, m := range g.meteors {
+		m.Draw(scream)
 	}
 }
 
