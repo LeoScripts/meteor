@@ -19,8 +19,8 @@ func NewLaser(position Vector) *Laser {
 	halfW := float64(bounds.Dx()) / 2
 	halfH := float64(bounds.Dy()) / 2
 
-	position.x -= halfW
-	position.y -= halfH
+	position.X -= halfW
+	position.Y -= halfH
 
 	return &Laser{
 		image: image,
@@ -31,13 +31,23 @@ func NewLaser(position Vector) *Laser {
 func (l *Laser) Update() {
 	speed := 7.0
 
-	l.position.y += -speed
+	l.position.Y += -speed
 }
 
 func (l *Laser) Draw(scream *ebiten.Image) {
 	op := &ebiten.DrawImageOptions{}
 
-	op.GeoM.Translate(l.position.x, l.position.y)
+	op.GeoM.Translate(l.position.X, l.position.Y)
 
 	scream.DrawImage(l.image, op)
 }
+
+func (l *Laser) Collider() Rect {
+	bounds := l.image.Bounds()
+
+	return NewRect(
+		l.position.X, 
+		l.position.Y, 
+		float64(bounds.Dx()), 
+		float64(bounds.Dy()))
+} 

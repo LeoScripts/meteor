@@ -20,8 +20,8 @@ func NewPlayer(game *Game) *Player {
 	halfw := float64(bounds.Dx()) /2
 
 	position := Vector{
-		x: (screamWith /2) - halfw,
-		y: 500,
+		X: (screamWith /2) - halfw,
+		Y: 500,
 	}
 
 	return &Player{
@@ -36,13 +36,13 @@ func (p *Player) Update() {
 	speed := 6.0
 
 	if ebiten.IsKeyPressed(ebiten.KeyLeft) {
-		p.position.x -= speed
+		p.position.X -= speed
 	} else if ebiten.IsKeyPressed(ebiten.KeyRight) {
-		p.position.x += speed
+		p.position.X += speed
 	} else if ebiten.IsKeyPressed(ebiten.KeyUp) {
-		p.position.y -= speed
+		p.position.Y -= speed
 	} else if ebiten.IsKeyPressed(ebiten.KeyDown) {
-		p.position.y += speed
+		p.position.Y += speed
 	}
 
 	// atualizando o tempo de execução do laser
@@ -56,8 +56,8 @@ func (p *Player) Update() {
 		halfH := float64(bounds.Dx()) /2
 
 		spawnPos := Vector{
-			p.position.x + halfW,
-			p.position.y + halfH,
+			p.position.X + halfW,
+			p.position.Y + halfH,
 		}
 
 		laser := NewLaser(spawnPos)
@@ -68,7 +68,17 @@ func (p *Player) Update() {
 func (p *Player) Draw(scream *ebiten.Image) {
 	op := &ebiten.DrawImageOptions{}
 
-	op.GeoM.Translate(p.position.x, p.position.y)
+	op.GeoM.Translate(p.position.X, p.position.Y)
 
 	scream.DrawImage(p.image, op)
 }
+
+func (p *Player) Collider() Rect {
+	bounds := p.image.Bounds()
+
+	return NewRect(
+		p.position.X, 
+		p.position.Y, 
+		float64(bounds.Dx()), 
+		float64(bounds.Dy()))
+} 

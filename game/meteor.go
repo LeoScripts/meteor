@@ -18,8 +18,8 @@ func NewMeteor() *Meteor {
 	speed := (rand.Float64() * 13)
 
 	positon := Vector{
-		x: rand.Float64() * screamWith,
-		y: -100,
+		X: rand.Float64() * screamWith,
+		Y: -100,
 	}
 
 	return &Meteor{
@@ -30,13 +30,23 @@ func NewMeteor() *Meteor {
 }
 
 func (m *Meteor) Update() {
-	m.position.y += float64(m.speed)
+	m.position.Y += float64(m.speed)
 }
 
 func (m *Meteor) Draw(scream *ebiten.Image) {
 	op := &ebiten.DrawImageOptions{}
 
-	op.GeoM.Translate(m.position.x, m.position.y)
+	op.GeoM.Translate(m.position.X, m.position.Y)
 
 	scream.DrawImage(m.image, op)
 }
+
+func (m *Meteor) Collider() Rect {
+	bounds := m.image.Bounds()
+
+	return NewRect(
+		m.position.X, 
+		m.position.Y, 
+		float64(bounds.Dx()), 
+		float64(bounds.Dy()))
+} 

@@ -1,6 +1,10 @@
 package game
 
-import "github.com/hajimehoshi/ebiten/v2"
+import (
+	"fmt"
+
+	"github.com/hajimehoshi/ebiten/v2"
+)
 
 type Game struct{
 	player *Player
@@ -53,6 +57,14 @@ func (g *Game) Draw(scream *ebiten.Image) {
 	for _, m := range g.meteors {
 		m.Draw(scream)
 	}
+
+	for _, m := range g.meteors {
+		// verifica colisao da nave com meteoro
+		if (m.Collider().Intersects(g.player.Collider())){
+			fmt.Println("voce perdeu")
+			g.Reset() // reseta tudo caso perca
+		}
+	}
 }
 
 // tamanaho da tela
@@ -63,4 +75,11 @@ func (g *Game) Layout(outsideWith, outsideHeith int) (int,  int) {
 
 func (g *Game) AddLasers(laser *Laser) {
 	g.lasers = append(g.lasers, laser)
+}
+
+func (g *Game) Reset() {
+	g.player = NewPlayer(g)
+	g.meteors = nil
+	g.lasers = nil
+	g.meteorSpawnTimer.Reset()
 }
