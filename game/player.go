@@ -29,7 +29,17 @@ func NewPlayer() *Player {
 }
 
 func (p *Player) Update() {
+	speed := 6.0
 
+	if ebiten.IsKeyPressed(ebiten.KeyLeft) {
+		p.position.x -= speed
+	} else if ebiten.IsKeyPressed(ebiten.KeyRight) {
+		p.position.x += speed
+	} else if ebiten.IsKeyPressed(ebiten.KeyUp) {
+		p.position.y -= speed
+	} else if ebiten.IsKeyPressed(ebiten.KeyDown) {
+		p.position.y += speed
+	}
 }
 
 func (p *Player) Draw(scream *ebiten.Image) {

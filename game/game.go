@@ -16,6 +16,7 @@ func NewGame() *Game {
 // metodos que a lib espera para funcionar --------------------------------------
 // atualiza a logica do jogo
 func (g *Game) Update() error {
+	g.player.Update()
 	return nil
 }
 
