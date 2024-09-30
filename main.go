@@ -1,28 +1,13 @@
 package main
 
-import "github.com/hajimehoshi/ebiten/v2"
+import (
+	"meteor/game"
 
-type Game struct{}
-
-// metodos que a lib espera para funcionar --------------------------------------
-// atualiza a logica do jogo
-func (g *Game) Update() error {
-	return nil
-}
-
-// desenha os objetos na tela
-func (g *Game) Draw(scream *ebiten.Image) {
-	
-}
-
-// tamanaho da tela
-func (g *Game) Layout(outsideWith, outsideHeith int) (screamWith, screamHeith int) {
-	return outsideWith, outsideHeith
-}
-//---------------------------------------------------------------------------------
+	"github.com/hajimehoshi/ebiten/v2"
+)
 
 func main () {
-	g := &Game{}
+	g := game.NewGame()
 
 	err := ebiten.RunGame(g)
 	if err != nil {
