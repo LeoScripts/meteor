@@ -2,8 +2,12 @@ package game
 
 import (
 	"fmt"
+	"image/color"
+	"meteor/assets"
+	"time"
 
 	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/hajimehoshi/ebiten/v2/text"
 )
 
 type Game struct{
@@ -11,6 +15,7 @@ type Game struct{
 	lasers []*Laser
 	meteors []*Meteor
 	meteorSpawnTimer *Timer
+	score int
 }
 
 func NewGame() *Game {
@@ -58,11 +63,13 @@ func (g *Game) Draw(scream *ebiten.Image) {
 		m.Draw(scream)
 	}
 
+	text.Draw(scream, fmt.Sprintf("Pontos: %d", g.score), assets.FontUi, 20 , 100, color.White)
+
 	for _, m := range g.meteors {
 		// verifica colisao da nave com meteoro
 		if (m.Collider().Intersects(g.player.Collider())){
-			fmt.Println("voce perdeu")
 			g.Reset() // reseta tudo caso perca
+			time.Sleep(time.Second * 2)
 		}
 	}
   
@@ -71,6 +78,7 @@ func (g *Game) Draw(scream *ebiten.Image) {
 			if m.Collider().Intersects(l.Collider()) {
 				g.meteors = append(g.meteors[:i], g.meteors[i + 1:]...)
 				g.lasers = append(g.lasers[:j], g.lasers[j + 1:]...)
+				g.score += 1
 			}
 		}
 	}
@@ -91,4 +99,5 @@ func (g *Game) Reset() {
 	g.meteors = nil
 	g.lasers = nil
 	g.meteorSpawnTimer.Reset()
+	g.score = 0
 }
