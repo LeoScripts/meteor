@@ -1,17 +1,23 @@
 # Meteor Game
 
-projetinho por diversão
+projetinho por diversão usando a linguagem GO
 
 Como rodar
 
 1. Clone o repositório
 
+```
 git clone
+```
 
-    entre na pasta do projeto
+2. entre na pasta do projeto
 
+```
 go mod tidy
+```
 
-    Inicie o jogo
+3. Inicie o jogo
 
+```
 go run main.go
+```
