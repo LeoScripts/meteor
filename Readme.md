@@ -1,6 +1,6 @@
 # Meteor Game
 
-projetinho por diversão usando a linguagem GO
+projetinho feito por diversão usando a linguagem GO
 
 Como rodar
 
@@ -10,7 +10,7 @@ Como rodar
 git clone https://github.com/LeoScripts/meteor.git
 ```
 
-2. entre na pasta do projeto
+2. instalar as dependencias
 
 ```
 go mod tidy
