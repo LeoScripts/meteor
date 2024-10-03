@@ -22,6 +22,7 @@ func NewGame() *Game {
 	g := &Game{
 		meteorSpawnTimer: NewTimer(24),
 	}
+
 	player := NewPlayer(g)
 	g.player = player
 	return g
@@ -53,8 +54,8 @@ func (g *Game) Update() error {
 
 // desenha os objetos na tela
 func (g *Game) Draw(scream *ebiten.Image) {
-	g.player.Draw(scream)
 
+	g.player.Draw(scream)
 	for _, l := range g.lasers {
 		l.Draw(scream)
 	}
@@ -68,8 +69,8 @@ func (g *Game) Draw(scream *ebiten.Image) {
 	for _, m := range g.meteors {
 		// verifica colisao da nave com meteoro
 		if (m.Collider().Intersects(g.player.Collider())){
-			g.Reset() // reseta tudo caso perca
 			time.Sleep(time.Second * 2)
+			g.Reset() // reseta tudo caso perca
 		}
 	}
   
